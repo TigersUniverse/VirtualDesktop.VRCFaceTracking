@@ -5,10 +5,10 @@
     <SccProvider>SAK</SccProvider>
     <SccAuxPath>SAK</SccAuxPath>
     <SccLocalPath>SAK</SccLocalPath>
+    <TargetFrameworks>net7.0;netstandard2.1;net481</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net7.0-windows</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -32,9 +32,39 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net481'">
+    <!--<Reference Include="VRCFaceTracking">
+      <HintPath>$(VRCFaceTrackingBuild)\net481\VRCFaceTracking.dll</HintPath>
+    </Reference>-->
     <Reference Include="VRCFaceTracking.Core">
-      <HintPath>..\..\..\3rdParty\VRCFaceTracking\VRCFaceTracking.Core.dll</HintPath>
+      <HintPath>$(VRCFaceTrackingBuild)\net481\VRCFaceTracking.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCFaceTracking.Core">
+      <HintPath>$(VRCFaceTrackingBuild)\net481\VRCFaceTracking.SDK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <!--<Reference Include="VRCFaceTracking">
+      <HintPath>$(VRCFaceTrackingBuild)\net481\VRCFaceTracking.dll</HintPath>
+    </Reference>-->
+    <Reference Include="VRCFaceTracking.Core">
+      <HintPath>$(VRCFaceTrackingBuild)\net7.0\VRCFaceTracking.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCFaceTracking.SDK">
+      <HintPath>$(VRCFaceTrackingBuild)\net7.0\VRCFaceTracking.SDK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <!--<Reference Include="VRCFaceTracking">
+      <HintPath>$(VRCFaceTrackingBuild)\net481\VRCFaceTracking.dll</HintPath>
+    </Reference>-->
+    <Reference Include="VRCFaceTracking.Core">
+      <HintPath>$(VRCFaceTrackingBuild)\netstandard2.1\VRCFaceTracking.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCFaceTracking.SDK">
+      <HintPath>$(VRCFaceTrackingBuild)\netstandard2.1\VRCFaceTracking.SDK.dll</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -42,6 +72,10 @@
     <None Update="module.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="VirtualDesktop.FaceTracking.csproj.user" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
